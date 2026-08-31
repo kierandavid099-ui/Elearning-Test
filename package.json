@@ -1,0 +1,22 @@
+{
+  "name": "elearningtest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wdio": "wdio run ./wdio.conf.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@wdio/allure-reporter": "^9.29.1",
+    "@wdio/cli": "^9.29.0",
+    "@wdio/local-runner": "^9.29.0",
+    "@wdio/mocha-framework": "^9.29.0",
+    "@wdio/spec-reporter": "^9.29.0",
+    "allure-commandline": "^2.43.0"
+  }
+}

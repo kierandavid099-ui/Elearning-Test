@@ -1,0 +1,738 @@
+<div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 id="lbl-lecturer-modal-title" class="modal-title">Course Instructor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div id="div-lecturer-modal-error" class="alert alert-danger" role="alert" style="display: none;"></div>
+                <form class="form-horizontal" id="frm-lecturer-modal" role="form" method="POST" enctype="multipart/form-data" action="">
+
+                    <div class="col-lg-12 pe-2">
+
+                        <input type="hidden" name="_token" value="ZZO0z9xq6s3ukZJtM488ttZRpVdj5mZ5dqpIaHxN">
+                        <div class="offline-flag"><span class="offline-lecturers" style="display: none;">You are currently offline</span></div>
+
+                        <div id="spinner-lecturers" class="spinner-border text-primary" role="status" style="display: none;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+
+                        <input type="hidden" id="selected-staff-value" value="">
+                        <input type="hidden" id="txt-lecturer-primary-id" value="0">
+                        <div id="div-show-txt-lecturer-primary-id" style="display: none;">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="">
+    <div class="col-lg-12 pe-2">
+
+        <div id="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-striped">
+                        
+                        <tbody class="">
+                            <tr id="div_lecturer_name_title">
+                                <!-- First Name Field -->
+                                <th scope="row"><label for="name_title" class="control-label">Title:</label>
+                                </th>
+
+                                <td class="">
+                                    <span id="spn_lecturer_name_title">
+                                                                                    N/A
+                                                                            </span>
+                                </td>
+                            </tr>
+                            <tr id="div_lecturer_job_title">
+                                <!-- Telephone Field -->
+                                <th scope="row"> <label for="job_title" class="control-label">Job Title:</label>
+                                </th>
+
+                                <td class="">
+                                    <span id="spn_lecturer_job_title">
+                                                                                    N/A
+                                                                            </span>
+                                </td>
+                            </tr>
+                            <tr id="div_lecturer_last_name">
+                                <!-- First Name Field -->
+                                <th scope="row"><label for="last_name" class="control-label">Last Name:</label>
+                                </th>
+
+                                <td class="">
+                                    <span id="spn_lecturer_last_name">
+                                                                                    N/A
+                                                                            </span>
+                                </td>
+                            </tr>
+                            <tr id="div_lecturer_first_name">
+                                <!-- First Name Field -->
+                                <th scope="row"><label for="first_name" class="control-label">First Name:</label>
+                                </th>
+
+                                <td class="">
+                                    <span id="spn_lecturer_first_name">
+                                                                                    N/A
+                                                                            </span>
+                                </td>
+                            </tr>
+                            <tr id="div_lecturer_last_name">
+                                <!-- First Name Field -->
+                                <th scope="row"><label for="middle_name" class="control-label">Other Names:</label>
+                                </th>
+
+                                <td class="">
+                                    <span id="spn_lecturer_middle_name">
+                                                                                    N/A
+                                                                            </span>
+                                </td>
+                            </tr>
+                            <tr id="div_lecturer_email">
+                                <!-- Email Field -->
+                                <th scope="row"><label for="email" class="control-label">Email:</label>
+                                </th>
+
+                                <td class="">
+                                    <span id="spn_lecturer_email">
+                                                                                    N/A
+                                                                            </span>
+                                </td>
+                            </tr>
+                            <tr id="div_lecturer_telephone">
+                                <!-- Telephone Field -->
+                                <th scope="row"><label for="telephone" class="control-label">Telephone:</label>
+                                </th>
+
+                                <td class="">
+                                    <span id="spn_lecturer_telephone">
+                                                                                    N/A
+                                                                            </span>
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div-edit-txt-lecturer-primary-id">
+                            <div class="row">
+                                <div id="div-select-staff" class="div-select-staff col-lg-12">
+    <label class="mb-0 form-label fw-bold" for="select-staff">Select / Create Staff</label>
+    <select id="select-staff" class="form-select select-staff select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+        <option value="">Select Staff</option>
+        <option value="create-new-staff">Create a New Staff+</option>
+                <option value="">------------------------</option>
+                <option value="00c3f60f-c845-4750-834b-27b1d107bcb4">
+            Mrs. James, Helen (helenjames@gmail.com)
+        </option>
+                <option value="02524030-6687-471f-af23-b13d7635590c">
+             Compton, Noel (kuhykesel@mailinator.com)
+        </option>
+                <option value="0389983f-c973-4275-a686-9788bfedfbad">
+            Ms. Yus, Uff (uf@gmail.com)
+        </option>
+                <option value="056d6fb8-f74b-40f0-879c-8b9d44efcaa5">
+            Miss. Quan, Jane (janequan@example.com)
+        </option>
+                <option value="08e7277e-5d20-4854-bc16-f1ba8b9341a0">
+            Dr. kizito, Joseppi (elijah.garcia@mail.com)
+        </option>
+                <option value="0b474cbc-47e8-4720-94f8-957226309a04">
+             test, staff (testing2025@mail.com)
+        </option>
+                <option value="0c384ab9-4fb8-4fdc-a7df-cd56040400f0">
+             Battle, Cameron (xukurekipu@mailinator.com)
+        </option>
+                <option value="0c8a9742-1eaf-4e1b-9c61-245f2ebc1ebb">
+            Miss. Somto, Chukwu (somtochukwu@mail.com)
+        </option>
+                <option value="101b6536-748e-4a74-9982-edcd291c4c2b">
+            Mr. Dave, shapel (shapeld@mail.com)
+        </option>
+                <option value="1257b83c-94bf-43f5-9392-962e4521b410">
+            Ms. Lestrange, Bellatrix (trix@mail)
+        </option>
+                <option value="1b93f073-af60-4517-94c2-c320c930408e">
+            Mr. Stokes, Bree (pedihoh@mailinator.com)
+        </option>
+                <option value="1cb32204-8e77-49a5-9845-eb9b098d9bca">
+            Mrs. Craft, Craft (newlecturer1@gmail.com)
+        </option>
+                <option value="1d5e50f3-38c4-4492-a669-7fec8c971682">
+            Miss. Mary, Angel (maryangel@mail.com)
+        </option>
+                <option value="20a3d7d1-3887-46b2-87ef-b6d7c49800c6">
+             Stark, Barbara (gebol@mailinator.com)
+        </option>
+                <option value="21f07251-fc07-4060-848d-fa924c8e9ac6">
+            Mr. Ado, Mallam (ado@mail.com)
+        </option>
+                <option value="228e5f83-60f7-4317-85e4-887843beec63">
+            Dr. James, Walsh (jamesewalsh@jourrapide.com)
+        </option>
+                <option value="2337fc34-847e-4ffc-a08a-a3cbf09623f7">
+            Dr. KOMA, JERRY (jerrykomaa@gmail.com)
+        </option>
+                <option value="2367fec9-a7d7-4654-8de3-fb5a8ba61b4e">
+            Mr. offodile, somto (som@mail.com)
+        </option>
+                <option value="257478cd-1ca2-4bac-9c70-52a087b3d479">
+             Mills, Jasper (lajozavun@mailinator.com)
+        </option>
+                <option value="26e269fc-06b4-4ae3-bb10-98522ec6659b">
+            Mrs. Stone, Apple (applestone@gmail.com)
+        </option>
+                <option value="2b19d978-986c-4e92-9992-4fd51ec3b8cb">
+            Mr. Lecturer2, Elearning (elearninglecturer2@gmail.com)
+        </option>
+                <option value="2bdd04aa-c34a-4ab8-aafc-b7c7ce92483c">
+            Prof. Jan, Senkyr (jansenkyr@jourrapide.com)
+        </option>
+                <option value="2cddc2f8-c743-4b93-a600-490c1889a77d">
+             Cain, Thor (kojigol@mailinator.com)
+        </option>
+                <option value="2f07aaca-17aa-4773-91ae-17094ccb41bd">
+            Mr. Aboo, Tau (ge@mail.com)
+        </option>
+                <option value="2f114ac3-cc9d-4acb-be63-1d56fc7d5f2b">
+            Hon. Kennedy, Kelsie (beje@mailinator.com)
+        </option>
+                <option value="30d01c45-cbd5-4e41-8bcd-b1796de1ab4c">
+            Mrs. Emeka, Martha (Emeka@mail.com)
+        </option>
+                <option value="30fad5ac-b8c8-4d30-835a-6e5b311196d3">
+             Valentine, Jocelyn (sajoroj@mailinator.com)
+        </option>
+                <option value="346eb457-47ee-4567-8f88-1eb4cbbe1743">
+            Mr. Garrett, Lunea (infotechdepartmentadmin@nda.edu.ng)
+        </option>
+                <option value="34c7f45a-d3ce-4886-95b4-d1706c692f73">
+            Miss. Bello, Bella (bellabello@edu.ng)
+        </option>
+                <option value="35c5c821-a2e9-4208-8c02-1facbec8fb7c">
+            Hon. Ngige, Obas (ngigeobas@schola.edu.ng)
+        </option>
+                <option value="388bb2e7-e89a-4818-9281-06f272a39093">
+             olowolaiyemo, tosin (15@m.m)
+        </option>
+                <option value="41d24a4f-7264-4f2f-9b0c-b277fbc8d93d">
+            Miss. Doe, jane (nnonyeluadaeze+123@gmail.com)
+        </option>
+                <option value="421a3472-fc45-41f9-b6d1-193858cd3ddf">
+            Capt. Austin, Driscoll (manager@app.com)
+        </option>
+                <option value="424e1311-842d-427e-a5f9-c9ded23369d2">
+            Mr. Johnson, William (william.johnson@mail.ng)
+        </option>
+                <option value="43143c8a-cf78-4691-9a42-4485157743ba">
+            Mr. Manager, Seminar (seminarmanager1@gmail.com)
+        </option>
+                <option value="43457abd-69d8-455a-a511-5814a196d0ed">
+             Chambers, Lara (tuvoxe@mailinator.com)
+        </option>
+                <option value="467a75f5-66ef-4658-9fa9-17710fee1d73">
+            Mr. joseph, sebs (emilymiillers@gmail.com)
+        </option>
+                <option value="4765c63c-bba4-4c51-85a2-6bae4cf62343">
+            Mr. Dave, Martin (martindave@mail.com)
+        </option>
+                <option value="486b67c6-5191-44e5-a7b4-8ac4a94f2b54">
+            Dr. Tony, Ed (tonyed@mail.com)
+        </option>
+                <option value="4882136d-beaf-467c-8aec-09d2a41c680e">
+            Mr. Doe, John (mail@mail.com)
+        </option>
+                <option value="4a93cebf-40b7-42de-b771-1ebc87ed361b">
+            Miss. doe, adaeze (nnonyeluadaeze+234@gmail.com)
+        </option>
+                <option value="4ed20b5c-9afe-4abc-ab36-c99882521bb5">
+            Dr. Sweeney, Sydney (sydney.sweeney@nda.edu.ng)
+        </option>
+                <option value="535e6e0b-7e1c-4620-bbdd-1948979472ae">
+            Mrs. 111, 000 (myemail@gmail.com)
+        </option>
+                <option value="53bfbe7b-8007-4a87-9993-2497d14ff964">
+             Aguilar, Nora (tizepa@mailinator.com)
+        </option>
+                <option value="53fb39b7-d086-4ea5-8c0c-15ef5f79c726">
+            Mr. owen, owen (oweniraoya7@gmail.com)
+        </option>
+                <option value="55a1fda7-dff8-41ea-9ffa-51487b2ed1ef">
+            Mr. Seminar, Manager (seminar.manager@nda.edu.ng)
+        </option>
+                <option value="578d2aa1-145d-46e4-af2e-3bb6f28fa133">
+            Mr. Smith, John (johnsmith@gmail.com)
+        </option>
+                <option value="5877ec52-f29a-414a-84f6-e7276a06d4c3">
+            Mr. Ibibio, Emeka (emekaa@gmail.com)
+        </option>
+                <option value="58bd687a-f4d8-4579-ae3b-f7ef10335b55">
+            Mr. Bas, Sic (basic@mail.com)
+        </option>
+                <option value="58e09800-c0ca-4e67-b2a8-eed7bc118bcb">
+             johnson, scarlet (scarletjohnson@gmail.com)
+        </option>
+                <option value="5cbc652f-7167-45c8-8531-f50b5f986c41">
+            Mr. Shapel, Dave (daveshapen@mail.com)
+        </option>
+                <option value="60880ca0-8965-4dea-b4dd-b6da4ca190fd">
+            Mr. Adams, Kirby (great@gmail.com)
+        </option>
+                <option value="643bdb23-d8b0-406d-b897-daac858b5f3e">
+            Miss. Key, Christine (christineckey@dayrep.com)
+        </option>
+                <option value="6a26ce9c-1a3a-4548-85df-1e9b2b34b947">
+            Prof. Smith, Angel (angelsmith@gmail.com)
+        </option>
+                <option value="75ec59fa-872f-4564-96ce-864be0f3b204">
+            Mrs. poison, ivy (omoladeaboaba12@gmail.com)
+        </option>
+                <option value="7612189d-d028-4a8a-a471-4f7f54e9a8a3">
+            Mr. Craft, Kirby (anotherseminarlecturer1@gmail.com)
+        </option>
+                <option value="783bc3d2-8aa1-43cf-9914-9e7bc560c86d">
+            Mr. Ortega, Dora (soxusydoly@mailinator.com)
+        </option>
+                <option value="7c7ce135-a582-468d-9792-7c14528539d8">
+            Mr. Doe, MJ (durowadeabdulmajeed@gmail.com)
+        </option>
+                <option value="7d452a71-0628-4889-adfb-68cdd3bb50ab">
+            Mr. Sixtus, Godson (godsonking6@gmail.com)
+        </option>
+                <option value="7dd4e444-0f2d-4900-9002-58e9c7adc003">
+            Mr. Doe, Johnnymo (john@mail.com)
+        </option>
+                <option value="7f02f6d4-5d8b-4cc1-9d96-ea5ab85560cd">
+            Mr. john, john (staff1@gmail.com)
+        </option>
+                <option value="7fab9f36-6d41-4c06-bd09-093003bbe80b">
+            Mr. Ajayi, Called (ajayi@mail.com)
+        </option>
+                <option value="80d31047-01c6-44c6-9eef-74914e159e74">
+            Capt. Wayne, Bruce (techsisada@yahoo.com)
+        </option>
+                <option value="83cbfaab-cacf-4ab5-bbad-325710aaba73">
+             Brown, shelly (shellybrown@gmail.com)
+        </option>
+                <option value="865c383d-4e98-4d58-b28d-083b98ff53d8">
+            Miss. marymary, Justice (justice2@mail.com)
+        </option>
+                <option value="86c15cf8-91be-4408-9f94-7f098c1d7a78">
+             Lecturer 1, Seminar (seminarlecturer1@gmail.com)
+        </option>
+                <option value="87ec3e20-5201-4bfe-8a50-5ae355f79e53">
+            Mrs. bubbles, blossom (puffgirl@mail)
+        </option>
+                <option value="8881704d-19d0-4f5f-b73f-ae157e25cbda">
+            Hon. Williams, Justice (justice@gmail.com)
+        </option>
+                <option value="898005ac-e846-4458-9fb7-e7ec6f265e50">
+            Miss. McGonagall, Minerva (mcgonagall@mail.com)
+        </option>
+                <option value="8e8fe9ab-185e-4f35-930d-05b6f969f89d">
+             Herrera, Regina (nexuse@mailinator.com)
+        </option>
+                <option value="97bc5f82-375c-40e6-953c-44ba40813a07">
+             Cochran, Wing (cuquxyhat@mailinator.com)
+        </option>
+                <option value="97fbc123-8ffc-4419-83c6-289131ef7ce6">
+            Mr. firefox, becca (becca@nda.ng)
+        </option>
+                <option value="9bf873a5-c567-4585-940e-29d56bde6e43">
+             Lowery, Raja (cezuborul@mailinator.com)
+        </option>
+                <option value="9d90d2ba-5046-4e1b-a25a-c10ec55881ad">
+            Miss. downs, charlotte (charlotte@gmail.com)
+        </option>
+                <option value="a5cebd4b-5010-4393-b3eb-76d393f183e1">
+            Mr. Craft, Kirby (kkk@gmail.com)
+        </option>
+                <option value="ad398260-e5a1-4bb0-b36b-4ce5c837d321">
+            Mr. Ogundare, Godson (godson@hasob.ng)
+        </option>
+                <option value="b2f7e083-94e4-40a6-bc76-90705890c30b">
+             Richmond, Igor (waruge@mailinator.com)
+        </option>
+                <option value="b337548e-c91c-4e54-9d55-0609770fdebb">
+            Mr. Administrator, New (courseadmindone@mail.com)
+        </option>
+                <option value="b4650980-8ed0-4e37-a7a5-f969c37a4850">
+             Fola, NITDA (afomendex1@gmail.com)
+        </option>
+                <option value="b8454175-20aa-482e-8c68-430c48a5c0f9">
+            Mr. Wilcox, Kenneth (takaciti@mailinator.com)
+        </option>
+                <option value="ba88d020-50fb-453e-9c54-10d4946bfcec">
+            Mr. Yaeger, Eren (erenyae@mail.com)
+        </option>
+                <option value="bb525005-503a-4123-b7ce-affff7dce49f">
+            Miss. smith, carly (carly@gmail.com)
+        </option>
+                <option value="bc8d6fda-f54f-4800-8689-233fba4bb2d3">
+             Rowe, Baxter (bepobuj@mailinator.com)
+        </option>
+                <option value="be2d441c-dc48-416d-bede-808bf7f7af6b">
+             Vance, Martin (hynur@mailinator.com)
+        </option>
+                <option value="c12b0a02-5cfb-4bb4-b68d-53d0f2af1bd2">
+            Mr. Craft, Kirby (elearningadministrator1@gmail.com)
+        </option>
+                <option value="c3750cf2-7652-4035-9616-9f5febc523dd">
+             Winters, Alana (hukytoxute@mailinator.com)
+        </option>
+                <option value="c3dc78e1-835f-41be-88da-bfff0b139e0f">
+            Mr. guy, test (test@mail.com)
+        </option>
+                <option value="c883f54a-69cc-48c7-832b-c3fce7afe767">
+            Mr. James, Tony (tonyjames@mail.com)
+        </option>
+                <option value="cc2ef0a0-004e-4c03-83ba-9f4fc52d02b2">
+            Mr. Seminar, Lecturer (seminar.lecturer@nda.edu.ng)
+        </option>
+                <option value="cd26b6da-2492-4ec6-aa2e-7711c9f050c3">
+             Sanford, Britanni (niborub@mailinator.com)
+        </option>
+                <option value="d1163640-554e-4358-aec3-d72b88c72f6d">
+            Mr. wfe, fw (wef@vsd.vs)
+        </option>
+                <option value="d31d5ce4-7bc2-454c-8358-b39009df4f23">
+            Miss. Granger, Hermoine (hermoine@admin.com)
+        </option>
+                <option value="d43b54df-9999-416e-822d-f017e867eacb">
+            Mr. Iko, Mallam (iko@mail.com)
+        </option>
+                <option value="d5442ea1-0127-4985-988f-79c962ad04ce">
+            Mr. Anderson, Michael (michael.anderson@mail.ng)
+        </option>
+                <option value="d77c57f3-a853-475b-bfe9-b7d303f73ef8">
+            Mrs. smith, apple (apple@gmail.com)
+        </option>
+                <option value="dd105a2d-abd9-4e40-b736-d828029694e7">
+            Mr. Brown, James (james@gmail.com)
+        </option>
+                <option value="df278e18-f9be-43f3-8c09-0c01afbe8b23">
+            Mr. manager2, Elearning (elearningmanager2@gmail.com)
+        </option>
+                <option value="e07c7981-762c-4f49-bfba-5110e90555a3">
+            Dr. okafor, chinedu (chinedu@gmail.com)
+        </option>
+                <option value="e1045a7a-29e7-459f-9844-3a9605b8775a">
+             Dickerson, Macey (myrujor@mailinator.com)
+        </option>
+                <option value="e134b3b0-dad2-4a9b-b3b5-db6736294dbe">
+            Miss. Hernandez, Lily (lily.hernandez@mail.com)
+        </option>
+                <option value="e2f13ed5-55e0-4007-a0aa-966d56f50ef4">
+             Mcintosh, Kirby (pas@gmail.com)
+        </option>
+                <option value="eabdd75a-a297-4a3b-8ff6-f09db5a4bf07">
+            Mr. Sarah, Price (sarahmprice@teleworm.us)
+        </option>
+                <option value="f4128fd7-4454-408c-a6d5-fd9118b3201b">
+            Mr. Craft, John (elearningmanager1@gmail.com)
+        </option>
+                <option value="fa708697-3374-40a8-ba56-2e1c37bce4a7">
+            Mr. fatima, joseph (fatimajoseph@gmail.com)
+        </option>
+                <option value="fbff6d4b-e171-4d4a-8ab8-ca1a445e969b">
+             Smith, Kylie (borizubuxe@mailinator.com)
+        </option>
+                <option value="fc179d64-b506-4d36-b9a4-f10b59e6e84d">
+             Clemons, Althea (qoxe@mailinator.com)
+        </option>
+                <option value="fc21e11f-22e8-4dff-ab20-dc0a7268dbba">
+            Mr. Harry, Isong (harry@mail.com)
+        </option>
+                <option value="fdfdb844-1a98-4d33-9e4b-64a320d94e65">
+             All, KnowIt (mrknowitall@gmail.com)
+        </option>
+                    </select><span class="select2 select2-container select2-container--classic" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-select-staff-container"><span class="select2-selection__rendered" id="select2-select-staff-container" title="Select Staff">Select Staff</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+</div>
+
+<div id="div-new-lecturer" style="display: none;">
+    <div class="d-lg-flex col-lg-12">
+        <!-- Department Field -->
+        <div id="div-department" class="form-group col-lg-8 me-lg-2">
+            <label style="font-weight: 500;" for="department_id" class="mb-0 ">Department <small class="text-danger">*</small></label>
+            <div class="col-lg-12">
+                <select id="department_id" class="form-select select2-hidden-accessible" aria-label=".form-select" tabindex="-1" aria-hidden="true">
+                    <option value="">Select Department</option>
+                                                                                                                                                                                                                            <option value="b4c7c8e3-ee07-4028-b759-43d317561433">Somto Test School</option>
+                                                            <option value="3286e9c3-381b-4457-a9fe-33cb103633cc">&nbsp;&nbsp; Dept of Biology
+                    </option>
+                                                                                <option value="854a9121-3fa4-4324-8d2a-f1f8627b33ee">&nbsp;&nbsp; Agric Engineering
+                    </option>
+                                                                                <option value="6c49d1cf-2310-41b0-83eb-663f6c8a9179">&nbsp;&nbsp; Computer Science
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="5d58df31-28f1-4b53-8df0-36ff727166f2">Language Unit</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="dbc02cfc-d353-457e-9eb8-4208e422d791">Dangote Sugar Refinery</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="603b14d7-dff5-4044-8ce3-92544ff6705d">Selar Unit</option>
+                                                                                                                                                                                                                            <option value="62304b75-02b4-4d1a-8b60-1132a1e72355">&nbsp;&nbsp; Belting
+                    </option>
+                                                                                                                                                                <option value="7ab5b48c-053a-476d-ab3a-76f9d62eff14">&nbsp;&nbsp; Buckle IN
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="276305ff-0238-4990-aa8f-923bdfab29c5">Dragon Tamerss</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="c06c359d-cbcb-4f6b-8771-50dad6b5ab36">Aubrey Hensley</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="53ec73b8-44aa-425e-8668-434e3ccbe3ab">Faculty of Innovation</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="d24501dd-fcd2-40ec-a022-a08082018b74">&nbsp;&nbsp; Department of Interdisciplinary Studies
+                    </option>
+                                                                                <option value="ad50fc2a-99f9-4c47-a87a-798e1a8a8c78">&nbsp;&nbsp; Department of Educational Innovation &amp; Skills Development
+                    </option>
+                                                                                <option value="e1881372-372a-4cd0-aa4b-830b6b913b69">&nbsp;&nbsp; Department of Creative Arts &amp; Innovation
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="d0b919b6-b9cf-4763-85a7-0ec32ff203c8">software</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="b3132b8a-3f29-40df-aae9-ab8062e051a1">Globacom Telecommunications</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="323ec10b-e9e1-4b4a-b2b7-a1dfa295d35a">Business Law</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="c86f7942-bd2f-4c8c-a163-60313e84029c">Environmental Sciences</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="ffd36aa7-361a-4d19-be3b-908ac7ebbcfc">&nbsp;&nbsp; Department of Accounting
+                    </option>
+                                                                                                                        <option value="5321047a-88d9-41ca-b05c-050ed74ff105">&nbsp;&nbsp; Department of Business Administration
+                    </option>
+                                                                                                                        <option value="f5a04106-6f08-43a2-8dad-f9edf7197b7c">&nbsp;&nbsp; Department of Banking and Finance
+                    </option>
+                                                                                <option value="8918ac4d-0d98-43df-88d5-a0f4c18aeb87">&nbsp;&nbsp; Department of Marketing
+                    </option>
+                                                                                <option value="94fb3a19-3265-4b1b-8739-9306db82aa86">&nbsp;&nbsp; Department of Public Administration
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="8f9c0a48-f549-4395-979f-f2f9c4691bdc">Agriculture</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="b87ec084-8f35-4fc0-bdcd-56ce206ba23f">&nbsp;&nbsp; Department of Educational Management
+                    </option>
+                                                                                <option value="3d61a3c9-62a6-4860-8a9e-d40e4dcfa97a">&nbsp;&nbsp; Department of Curriculum and Instruction
+                    </option>
+                                                                                <option value="9ec51a14-b1d8-441d-b613-2c62a4787d49">&nbsp;&nbsp; Department of Special Education
+                    </option>
+                                                                                <option value="cb6ecb50-1bb1-408b-a736-400a93cad9ae">&nbsp;&nbsp; Department of Educational Psychology
+                    </option>
+                                                                                <option value="14489555-adf0-4ac5-8d7a-b50e6e7f27b2">&nbsp;&nbsp; Department of Science&nbsp;Education
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="6e01ee5e-1219-43d9-b86f-90fecf1cea0a">Faculty of Business and Management Sciences</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="27476a39-1a18-4599-834a-59fa7765992b">&nbsp;&nbsp; Fishery
+                    </option>
+                                                                                <option value="3cb4afa6-e8b6-4a81-94ad-2b340801f491">&nbsp;&nbsp; Legistration
+                    </option>
+                                                                                <option value="1fe9829b-7974-4281-a02c-4aae6162a673">&nbsp;&nbsp; Commerce
+                    </option>
+                                                                                                                                                                <option value="a944d5b9-ce29-4a03-955d-c3216fe7ff1a">&nbsp;&nbsp; Accounting
+                    </option>
+                                                                                                                        <option value="9f2b1843-b446-49b0-a2c7-dabcf117063d">&nbsp;&nbsp; Finance
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="81d6be68-e152-48ef-847d-bc0d966feca3">Social Sciences</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="057ca292-ebea-4a52-911e-804576def166">&nbsp;&nbsp; Criminology
+                    </option>
+                                                                                <option value="e6471d86-bace-495a-83e3-48b5ae3769ca">&nbsp;&nbsp; Psychology
+                    </option>
+                                                                                <option value="e570aff1-0432-47b4-b317-524274dca50b">&nbsp;&nbsp; Political Science
+                    </option>
+                                                                                <option value="e9fff4f8-17bb-44ef-ae12-11e8bc27f384">&nbsp;&nbsp; Sociology
+                    </option>
+                                                                                <option value="08ac8218-da40-45f1-b47b-ae6f550c72c3">&nbsp;&nbsp; Economics
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="f7454db4-3c66-4647-8881-c18de9505f97">Faculty of Engineering</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="1d22a97f-58f1-43f2-9feb-fb2d81e459e3">Language</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="f8c95192-5cc8-4c0f-adbc-9a9d3111db37">&nbsp;&nbsp; English
+                    </option>
+                                                                                <option value="e77dfbd9-77e9-44cf-a29c-06a10025d6cb">&nbsp;&nbsp; French
+                    </option>
+                                                                                <option value="4d3cb15c-a1a9-4ff2-b70c-82db033213a7">&nbsp;&nbsp; Igbo
+                    </option>
+                                                                                <option value="76ce1dde-2abf-4809-9e7b-48824f5d1f20">&nbsp;&nbsp; Hausa
+                    </option>
+                                                                                <option value="24e3420a-b6b9-4729-9130-f5caf632a71a">&nbsp;&nbsp; Yoruba
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="0b2a6b89-3b1c-420d-83d1-1fe2bd17f992">Law</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="7d55fbc8-e7e7-44d1-8114-fb0a21a95200">&nbsp;&nbsp; Psychiatry
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="81580b2c-df55-49de-9e8f-8c8f6d05e493">&nbsp;&nbsp; MedIcal Law
+                    </option>
+                                                                                <option value="45340117-c581-4034-b8af-c1fa4130d71e">&nbsp;&nbsp; Criminal Law
+                    </option>
+                                                                                <option value="2958a0bb-6124-47b3-b7ff-4a9973fd06e6">&nbsp;&nbsp; Public Law
+                    </option>
+                                                                                <option value="92521012-3660-43ed-84dc-581695d418b1">&nbsp;&nbsp; Commercial Law
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="94e3957e-c2e7-4799-8796-594554cd010a">Faculty2</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="d6a9073b-5dd9-4367-80c4-096a2f6d82be">&nbsp;&nbsp; Department5
+                    </option>
+                                                                                <option value="412c4b16-22a2-4701-9b7c-7a0f8e63ba7a">&nbsp;&nbsp; Department4
+                    </option>
+                                                                                                                        <option value="7150c439-316b-4d63-966a-6882b23aa0ff">&nbsp;&nbsp; Department3
+                    </option>
+                                                                                                                        <option value="d6f92fa6-603d-4368-8a10-9ccebd1f22c9">&nbsp;&nbsp; Department2
+                    </option>
+                                                                                                                                                                                                        <option value="2c0d22d4-79b9-4f49-b4dc-6306397594c7">&nbsp;&nbsp; Department1
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="3d5cbb2c-41a9-4921-b274-7ca744cdd538">Health Sciences</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="23894d38-473b-483f-98c5-305e36c7b30b">&nbsp;&nbsp; Physiotherapy
+                    </option>
+                                                                                <option value="0a2e49d1-c48f-49c6-82b9-ea63fff289cc">&nbsp;&nbsp; Pharmacy
+                    </option>
+                                                                                                                        <option value="8574e23d-9921-4098-a9f9-3db50a1e10cc">&nbsp;&nbsp; Medical Laboratory Science
+                    </option>
+                                                                                <option value="09eb2d11-d8fb-42ac-b3a7-021955ff9660">&nbsp;&nbsp; Public Health
+                    </option>
+                                                                                                                        <option value="1ebd4937-5874-477e-895c-e4ac32234fd1">&nbsp;&nbsp; Nursing Science
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="6a846764-0e8b-40b3-892b-786b98ffbfef">Faculty1</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="a5fd9444-70f2-4790-94e6-cce5d23c1dce">&nbsp;&nbsp; Department5
+                    </option>
+                                                                                <option value="3f13de7b-bce8-4536-8093-324fee04b365">&nbsp;&nbsp; Department4
+                    </option>
+                                                                                <option value="b9680387-7030-4f0d-825a-acf56f9ad569">&nbsp;&nbsp; Department3
+                    </option>
+                                                                                <option value="394a1c5b-8b40-4049-9ba1-329c3173134b">&nbsp;&nbsp; Department2
+                    </option>
+                                                                                <option value="f6fa23a4-c1cb-415e-8ffa-f798f8ed7e2c">&nbsp;&nbsp; Department1
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="26ced581-3073-4bf4-89af-689fce149d58">Medicine</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="34e5f09b-d8b1-4e94-a142-fccfa6843f6a">&nbsp;&nbsp; Psychiatry
+                    </option>
+                                                                                <option value="f895e259-83de-432b-b90e-7eb784c1bafa">&nbsp;&nbsp; Obstetrics and Gynecology
+                    </option>
+                                                                                                                        <option value="73d87216-ed30-44b8-823f-30daac439210">&nbsp;&nbsp; Pediatrics
+                    </option>
+                                                                                                                        <option value="b14f3505-5e27-4f60-983e-31af2a05f19a">&nbsp;&nbsp; Internal Medicine
+                    </option>
+                                                                                <option value="d6f03422-8ab2-4c9b-92a4-7eb01bab3d2a">&nbsp;&nbsp; Surgery
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="bd8e803b-1e8e-4fe0-8112-4497738f8890">Basic &amp; Applied Science</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="e74dc8af-6cdc-4939-a745-6d00d19bce62">&nbsp;&nbsp; Actuarial Science
+                    </option>
+                                                                                                                                                                <option value="caf9b9f8-df48-48e7-b63c-f062b9b46623">&nbsp;&nbsp; Department of Microbiology
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="5ab9ae0f-a7ce-4f47-88de-e4bf805309d4">&nbsp;&nbsp; Computer Knowledge
+                    </option>
+                                                                                                                        <option value="66f439df-c8c5-41d8-ae40-badc6ff6172a">&nbsp;&nbsp; Computer Science
+                    </option>
+                                                                                <option value="0e75ee9b-1b50-4836-8ed5-f592d947993e">&nbsp;&nbsp; Information Technology
+                    </option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="5cb9ed2f-a6ec-4800-8093-96d77fcd196f">Administration</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="c6d9e42f-6c8f-4201-8616-a67177268539">&nbsp;&nbsp; Bursary
+                    </option>
+                                                                                <option value="aafc116e-ec3f-4bc6-8b27-43b33c82cb68">&nbsp;&nbsp; Audit
+                    </option>
+                                                                                <option value="a150302f-d371-4422-a7d0-d6824c30e2b8">&nbsp;&nbsp; Procurement
+                    </option>
+                                                                                <option value="7cd84f12-d8ce-472d-b9ae-73497c74a0c7">&nbsp;&nbsp; ICT
+                    </option>
+                                                                                <option value="6c34bde5-9c0e-4f4a-88fe-267bf815d97f">&nbsp;&nbsp; Works
+                    </option>
+                                                                                                                                                                                </select><span class="select2 select2-container select2-container--classic" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-department_id-container"><span class="select2-selection__rendered" id="select2-department_id-container" title="Select Department">Select Department</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+            </div>
+        </div>
+        <!-- Job Title Field -->
+        <div id="div-job_title" class="form-group col-lg-4 px-lg-2">
+            <label style="font-weight: 500;" for="job_title" class="mb-0 ">Title</label>
+            <div class="col-lg-12">
+                
+                <select class="form-select select2-hidden-accessible" name="name_title" id="name_title" aria-label="Title" tabindex="-1" aria-hidden="true">
+                    <option value="">Select Title</option>
+                                        <option value="Mr.">Mr.</option>
+                                        <option value="Mrs.">Mrs.</option>
+                                        <option value="Miss.">Miss.</option>
+                                        <option value="Ms.">Ms.</option>
+                                        <option value="Dr.">Dr.</option>
+                                        <option value="Prof.">Prof.</option>
+                                        <option value="Rev.">Rev.</option>
+                                        <option value="Capt.">Capt.</option>
+                                        <option value="Hon.">Hon.</option>
+                                    </select><span class="select2 select2-container select2-container--classic" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-name_title-container"><span class="select2-selection__rendered" id="select2-name_title-container" title="Select Title">Select Title</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+            </div>
+        </div>
+    </div>
+    <div class="d-lg-flex col-lg-12">
+        <!-- Last Name Field -->
+        <div id="div-last_name" class="form-group me-lg-2 col-lg-6">
+            <label style="font-weight: 500;" for="last_name" class="col-form-label">Last Name <small class="text-danger">*</small></label>
+            <div class="col-lg-12">
+                <input id="last_name" class="form-control" name="last_name" type="text">
+            </div>
+        </div>
+        <!-- First Name Field -->
+        <div id="div-first_name" class="form-group px-lg-2 col-lg-6">
+            <label style="font-weight: 500;" for="first_name" class="col-form-label">First Name <small class="text-danger">*</small></label>
+            <div class="col-lg-12">
+                <input id="first_name" class="form-control" name="first_name" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="d-lg-flex col-lg-12">
+        <!-- Middle Name Field -->
+        <div id="div-middle_name" class="form-group me-lg-2 col-lg-6">
+            <label style="font-weight: 500;" for="middle_name" class="col-form-label">Other Names</label>
+            <div class="col-lg-12">
+                <input id="middle_name" class="form-control" name="middle_name" type="text">
+            </div>
+        </div>
+        <!-- Job Title Field -->
+        <div id="div-job_title" class="form-group px-lg-2 col-lg-6">
+            <label style="font-weight: 500;" for="job_title" class=" col-form-label">Job Title</label>
+            <div class="col-lg-12">
+                <input id="job_title" class="form-control" name="job_title" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="d-lg-flex col-lg-12">
+        <!-- Email Field -->
+        <div id="div-email" class="form-group me-lg-2 col-lg-6">
+            <label style="font-weight: 500;" for="email" class="col-form-label">Email <small class="text-danger">*</small></label>
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <span class="bg-transparent input-group-text"><i class="fa fa-envelope"></i></span>
+                    <input type="email" class="form-control border-start-0" id="email" name="email">
+                </div>
+            </div>
+        </div>
+        <!-- Telephone Field -->
+        <div id="div-telephone" class="form-group px-lg-2 col-lg-6">
+            <label style="font-weight: 500;" for="telephone" class=" col-form-label">Telephone <small class="text-danger">*</small></label>
+            <div class="col-lg-12">
+                <input id="telephone" class="form-control" name="telephone" type="number">
+            </div>
+        </div>
+    </div>
+    <div class="d-lg-flex col-lg-12">
+        <!-- Sex Field -->
+        <div id="div-gender" class="form-group me-lg-2 col-lg-6">
+            <label style="font-weight:500;" for="gender" class=" col-form-label">Gender</label>
+            <div class="">
+                <select name="gender" id="gender" class="form-select col-lg-12">
+                    <option value=""> Choose Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+        </div>
+        <!-- National Id Number Field -->
+        <div id="div-national_id_number" class="form-group px-lg-2 col-lg-6">
+            <label style="font-weight: 500;" for="national_id_number" class="col-form-label">National ID Number
+                (NIN)</label>
+            <div class="col-lg-12">
+                <input id="national_id_number" class="form-control" name="national_id_number" type="number">
+            </div>
+        </div>
+    </div>
+</div>                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+
+
+            <div class="modal-footer" id="div-save-mdl-lecturer-modal">
+                <button type="button" class="btn btn-primary" id="btn-save-mdl-lecturer-modal" value="add">Save</button>
+            </div>
+
+        </div>
+    </div>

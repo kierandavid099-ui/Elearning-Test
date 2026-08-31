@@ -1,0 +1,9 @@
+node_modules/
+allure-results/
+allure-report/
+.env
+*.log
+.wdio-*
+errorShots/
+test/downloads/
+Claude Summaries.txt
