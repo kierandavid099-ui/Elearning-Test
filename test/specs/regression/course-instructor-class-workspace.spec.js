@@ -16,6 +16,7 @@ describe('REGRESSION (Course Instructor) — Class Workspace', () => {
         await LoginPage.login(COURSE_INSTRUCTOR_USER.email, COURSE_INSTRUCTOR_USER.password)
         await CourseClassWorkspacePage.open(INSTRUCTOR_CLASS_ID)
         await CourseClassWorkspacePage.breadcrumb.waitForDisplayed({ timeout: 10000 })
+        await CourseClassWorkspacePage.dismissTour()
     })
 
     describe('Edit Class Modal', () => {
@@ -96,6 +97,7 @@ describe('REGRESSION (Course Instructor) — Class Workspace', () => {
             // close click on this page, so don't hard-fail on `.modal.show`
             // disappearing — just confirm the close button works and the
             // page stays usable.
+            await CourseClassWorkspacePage.dismissTour(500)
             await CourseClassWorkspacePage.closeModalBtn.waitForClickable({ timeout: 5000 })
             await CourseClassWorkspacePage.closeModalBtn.click()
             await CourseClassWorkspacePage.openModal.waitForDisplayed({ reverse: true, timeout: 5000 }).catch(() => {})
@@ -383,9 +385,9 @@ describe('REGRESSION (Course Instructor) — Class Workspace', () => {
 
         it('REG-ICW-043 | Per-student engagement table is displayed with expected columns', async () => {
             addFeature('Instructor Class Workspace'); addSeverity('normal')
-            const headers = await Promise.all(
-                (await CourseClassWorkspacePage.analyticsTableHeaders).map(h => h.getText())
-            )
+            // In WDIO v9 an element array's map already returns one promise
+            // that resolves to the results, so no Promise.all here.
+            const headers = await CourseClassWorkspacePage.analyticsTableHeaders.map(h => h.getText())
             expect(headers.join(' ')).toMatch(/Participation/i)
         })
     })

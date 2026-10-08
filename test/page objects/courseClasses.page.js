@@ -15,6 +15,7 @@ class CourseClassesPage extends ModulePage {
     get creditHoursInput() { return $('#credit_hours') }
     get statusSelect() { return $('#status') }
     get locationInput() { return $('#location') }
+    get departmentSelect() { return $('#department_id_m') }
     get semesterSelect() { return $('#semester_id') }
     get courseSelect() { return $('#course_id') }
     get lecturerSelect() { return $('#lecturer_id') }
@@ -41,6 +42,9 @@ class CourseClassesPage extends ModulePage {
         await this.newBtn.click()
         await this.modal.waitForDisplayed({ timeout: 5000 })
         await this.saveBtn.waitForDisplayed({ timeout: 8000 })
+        // The form shows before it's ready and typing straight away fails with
+        // "element not interactable", so give it a moment like a person would.
+        await browser.pause(3000)
     }
 
     async openEditModal() {
@@ -57,10 +61,17 @@ class CourseClassesPage extends ModulePage {
         })
     }
 
-    // Row-search helper for the Classes table — matches the pattern in
-    // personModal.page.js's row(). Cell text (not id) since the table's
-    // component id is regenerated per page load.
-    row(text) { return $(`//tr[.//td[contains(., "${text}")]]`) }
+    // The Classes list is a stack of cards, not a table. Each card's title
+    // reads "<code> :: <name>" and its View/Edit/Delete buttons sit in the same
+    // card. The list itself is also wrapped in a .card, so take the closest one.
+    row(text) {
+        return $(`//h5[contains(@class, "card-title")][contains(., "${text}")]/ancestor::div[contains(concat(" ", normalize-space(@class), " "), " card ")][1]`)
+    }
+
+    // The top card in the list, which is the newest class once the page is reloaded.
+    get firstCard() {
+        return $(`(//h5[contains(@class, "card-title")])[1]/ancestor::div[contains(concat(" ", normalize-space(@class), " "), " card ")][1]`)
+    }
 
     // The lecturer select's option text convention (e.g. "Last, First" vs
     // "First Last") isn't confirmed, so match on the option containing both
@@ -97,14 +108,22 @@ class CourseClassesPage extends ModulePage {
 
     // Fills every required field on the New Class modal with either a
     // supplied value or a sane default, then saves. Returns the code/name
-    // used so callers can verify the row afterward.
-    async create({ code, name, lecturerFirstName, lecturerLastName } = {}) {
+    // used so callers can verify the row afterward. Pass departmentId to
+    // target a specific department (e.g. so a freshly-created class is
+    // guaranteed to show up for a student in that department) instead of
+    // whichever department happens to be first in the list.
+    async create({ code, name, lecturerFirstName, lecturerLastName, departmentId } = {}) {
         await this.openNewModal()
 
         await this.codeInput.setValue(code)
         await this.nameInput.setValue(name)
         await this.creditHoursInput.setValue(3)
         await this.selectFirstOption(this.statusSelect)
+        if (departmentId) {
+            await this.departmentSelect.selectByAttribute('value', departmentId)
+        } else {
+            await this.selectFirstOption(this.departmentSelect)
+        }
         await this.selectFirstOption(this.semesterSelect)
         await this.selectFirstOption(this.courseSelect)
 
@@ -113,6 +132,11 @@ class CourseClassesPage extends ModulePage {
         } else {
             await this.selectFirstOption(this.lecturerSelect)
         }
+
+        // Outline and Department are both required; the site refuses the save
+        // with "The outline field is required" if the Outline tab is left empty.
+        await this.openOutlineTab()
+        await this.courseOutlineInput.setValue('Outline added by automated e2e coverage.')
 
         await this.saveBtn.waitForDisplayed({ timeout: 5000 })
         await this.saveBtn.click()

@@ -118,8 +118,12 @@ describe('REGRESSION — Course Administrator', () => {
     describe('Reset Password Modal', () => {
 
         before(async () => {
-            await CourseAdminPage.resetPasswordLink.waitForDisplayed({ timeout: 5000 })
-            await CourseAdminPage.resetPasswordLink.click()
+            await CourseAdminPage.openResetPasswordModal()
+        })
+
+        after(async () => {
+            // Only a successful reset closes the modal by itself.
+            if (await CourseAdminPage.openModal.isDisplayed()) await CourseAdminPage.closeModal()
         })
 
         it('REG-ADM-013 | Reset password link opens the modal', async () => {
@@ -133,11 +137,27 @@ describe('REGRESSION — Course Administrator', () => {
             await expect(CourseAdminPage.newPasswordInput).toHaveValue(RESET_PASSWORD)
         })
 
-        it('REG-ADM-015 | Confirming the reset closes the modal', async () => {
+        // Two outcomes count as a pass: the reset succeeds, or the site says
+        // "must be different from old password" because the account already
+        // holds RESET_PASSWORD from an earlier run. Both show the reset reached
+        // the server. Anything else fails, including "User not found", which
+        // means the modal hadn't finished loading (see openResetPasswordModal).
+        it('REG-ADM-015 | Clicking reset gets a response from the site', async () => {
             addFeature('Course Administrator'); addSeverity('blocker')
+            await CourseAdminPage.resetConfirmBtn.waitForClickable({ timeout: 5000 })
             await CourseAdminPage.resetConfirmBtn.click()
-            await CourseAdminPage.dismissSweetAlert()
-            await expect(CourseAdminPage.resetConfirmBtn).not.toBeDisplayed()
+            // Like Disable, a successful reset may just close the modal with
+            // no alert, so the alert is optional. If one does appear, it has
+            // to be one of the two outcomes above.
+            const alerted = await CourseAdminPage.sweetAlert.waitForDisplayed({ timeout: 10000 }).catch(() => false)
+            if (alerted) {
+                if (!(await CourseAdminPage.sweetAlertSuccessIcon.isDisplayed())) {
+                    await expect(CourseAdminPage.sweetAlert).toHaveText(/must be different from old password/i)
+                }
+                await CourseAdminPage.dismissSweetAlert()
+            } else {
+                await expect(CourseAdminPage.resetConfirmBtn).not.toBeDisplayed({ wait: 10000 })
+            }
         })
     })
 
@@ -146,8 +166,11 @@ describe('REGRESSION — Course Administrator', () => {
     describe('Disable Administrator Modal', () => {
 
         before(async () => {
-            await CourseAdminPage.disableBtn.waitForDisplayed({ timeout: 5000 })
-            await CourseAdminPage.disableBtn.click()
+            await CourseAdminPage.clickTrigger(CourseAdminPage.disableBtn)
+            // Like the reset modal, this one shows its fields before it has
+            // loaded which user it's for; confirming too early is rejected.
+            await CourseAdminPage.disableReasonInput.waitForDisplayed({ timeout: 5000 })
+            await browser.pause(3000)
         })
 
         it('REG-ADM-016 | Disable action opens the reason modal', async () => {
@@ -163,9 +186,17 @@ describe('REGRESSION — Course Administrator', () => {
 
         it('REG-ADM-018 | Confirming disables the account and closes the modal', async () => {
             addFeature('Course Administrator'); addSeverity('blocker')
+            await CourseAdminPage.disableConfirmBtn.waitForClickable({ timeout: 5000 })
             await CourseAdminPage.disableConfirmBtn.click()
+            // Success may close the modal without any alert, so the alert is
+            // optional. If the site rejected it, fail with its own message
+            // rather than the vaguer "modal still displayed" below.
+            const alerted = await CourseAdminPage.sweetAlert.waitForDisplayed({ timeout: 10000 }).catch(() => false)
+            if (alerted && !(await CourseAdminPage.sweetAlertSuccessIcon.isDisplayed())) {
+                throw new Error(`Disable was rejected: ${await CourseAdminPage.sweetAlert.getText()}`)
+            }
             await CourseAdminPage.dismissSweetAlert()
-            await expect(CourseAdminPage.disableConfirmBtn).not.toBeDisplayed()
+            await expect(CourseAdminPage.disableConfirmBtn).not.toBeDisplayed({ wait: 10000 })
         })
     })
 

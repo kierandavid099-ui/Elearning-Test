@@ -54,6 +54,8 @@ class CoursesPage extends ModulePage {
         await this.viewBtn.waitForDisplayed({ timeout: 5000 })
         await this.viewBtn.click()
         await this.openModal.waitForDisplayed({ timeout: 5000 })
+        // The modal shows before its record has loaded; see personModal.page.js.
+        await browser.pause(3000)
     }
 }
 

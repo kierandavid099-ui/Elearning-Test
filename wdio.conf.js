@@ -51,7 +51,10 @@ exports.config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        browserName: 'chrome'
+        browserName: 'chrome',
+        // At Chrome's default window width the site's sidebar overlaps its
+        // centred modals and hides the left-hand form fields.
+        'goog:chromeOptions': { args: ['--window-size=1920,1080'] },
     }],
 
     //

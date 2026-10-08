@@ -19,6 +19,27 @@ export default class PersonModalPage {
     async open() {
         await browser.url(this.url)
         await this.breadcrumb.waitForDisplayed({ timeout: 10000 })
+        await this.dismissTour()
+    }
+
+    // Same "Welcome to Invoice Manager" tour pop-up as in modulePage.page.js;
+    // it sits over the page and blocks typing into forms.
+    get tourCloseBtn() { return $('.driver-popover-close-btn') }
+
+    async dismissTour(timeout = 3000) {
+        const shown = await this.tourCloseBtn.waitForDisplayed({ timeout }).catch(() => false)
+        if (shown) {
+            await this.tourCloseBtn.click()
+            await this.tourCloseBtn.waitForDisplayed({ reverse: true, timeout: 5000 })
+        }
+    }
+
+    // The tour can also pop up mid-spec (e.g. after a save reloads the page),
+    // and its overlay swallows clicks, so clear it before every modal trigger.
+    async clickTrigger(el) {
+        await el.waitForDisplayed({ timeout: 5000 })
+        await this.dismissTour(500)
+        await el.click()
     }
 
     get newBtn() { return $(this.newBtnSelector) }
@@ -56,6 +77,10 @@ export default class PersonModalPage {
     get newPasswordInput() { return $('#password') }
     get resetConfirmBtn() { return $('#btn-modify-user-password-reset') }
 
+    get sweetAlert() { return $('.sweet-alert.showSweetAlert') }
+    // SweetAlert v1 draws a different icon per alert type; only the green
+    // tick (.sa-success) is visible on a success alert.
+    get sweetAlertSuccessIcon() { return $('.sweet-alert.showSweetAlert .sa-icon.sa-success') }
     get sweetAlertConfirmBtn() { return $('.sweet-alert.showSweetAlert button.confirm') }
 
     // Save/disable/reset actions all resolve into a SweetAlert confirmation
@@ -70,28 +95,33 @@ export default class PersonModalPage {
     }
 
     async openNewModal() {
-        await this.newBtn.waitForDisplayed({ timeout: 5000 })
-        await this.newBtn.click()
+        await this.clickTrigger(this.newBtn)
         await this.modal.waitForDisplayed({ timeout: 5000 })
         // the modal shell appears before its content (loaded via AJAX) finishes
         // rendering — wait for the save button so callers see a fully-loaded form
         await this.saveBtn.waitForDisplayed({ timeout: 8000 })
+        // Even then it isn't ready for typing straight away; give it a moment.
+        await browser.pause(3000)
     }
 
     async openEditModal() {
-        await this.editBtn.waitForDisplayed({ timeout: 5000 })
-        await this.editBtn.click()
+        await this.clickTrigger(this.editBtn)
         await this.modal.waitForDisplayed({ timeout: 5000 })
         await this.saveBtn.waitForDisplayed({ timeout: 8000 })
+        // The existing record is filled in after the form appears; typing
+        // before then gets overwritten or saves a half-loaded form.
+        await browser.pause(3000)
     }
 
     async openViewModal() {
-        await this.viewBtn.waitForDisplayed({ timeout: 5000 })
-        await this.viewBtn.click()
+        await this.clickTrigger(this.viewBtn)
         // The Instructor spec's view trigger is literally 'a.btn-show-mdl-manager-modal' —
         // identical to the Administrator one — so we can't be sure the resource-specific
         // modal ID applies here. Wait for any open Bootstrap modal instead.
         await this.openModal.waitForDisplayed({ timeout: 5000 })
+        // The modal shows before its record has loaded; closing it too early
+        // lets the late load reopen it.
+        await browser.pause(3000)
     }
 
     async closeModal() {
@@ -113,7 +143,8 @@ export default class PersonModalPage {
     }
 
     get createNewStaffOption() { return $('.select2-results__option*=Create a New Staff') }
-    get newStaffSection() { return $('#div-new-staff') }
+    // Named per page: #div-new-lecturer on Course Instructor, #div-new-staff elsewhere.
+    get newStaffSection() { return $('#div-new-staff, #div-new-lecturer') }
     get departmentSelectContainer() { return $('#select2-department_id-container') }
     get lastNameInput() { return $('#last_name') }
     get firstNameInput() { return $('#first_name') }
@@ -137,8 +168,11 @@ export default class PersonModalPage {
         await this.departmentSelectContainer.waitForDisplayed({ timeout: 5000 })
         await this.departmentSelectContainer.click()
 
-        const options = await $$('.select2-results__option')
-        await options[0].waitForDisplayed({ timeout: 5000 })
+        await $('#select2-department_id-results .select2-results__option').waitForDisplayed({ timeout: 5000 })
+        // Skip the "Select Department" placeholder; picking it leaves the field empty.
+        const options = await $$('#select2-department_id-results .select2-results__option')
+            .filter(async (o) => !(await o.getText()).trim().startsWith('Select'))
+        if (!options.length) throw new Error('No departments to choose from')
         await options[Math.floor(Math.random() * options.length)].click()
     }
 
@@ -163,10 +197,12 @@ export default class PersonModalPage {
         return { firstName, lastName, email }
     }
 
-    // Row-search helper for the resource list behind this modal — the table's
-    // cdv_<hash> component id is regenerated per page load (see students.page.js),
-    // so match on visible text instead of a stable id.
-    row(text) { return $(`//tr[.//td[contains(., "${text}")]]`) }
+    // The list behind this modal is a stack of cards, not a table, and its
+    // cdv_<hash> id changes per page load. Find the text, then take the nearest
+    // card around it so the row's own action buttons can be looked up inside it.
+    row(text) {
+        return $(`//*[text()[contains(., "${text}")]]/ancestor::div[contains(concat(" ", normalize-space(@class), " "), " card ")][1]`)
+    }
 
     async setMiddleName(value) {
         await this.middleNameInput.waitForDisplayed({ timeout: 5000 })
@@ -176,6 +212,12 @@ export default class PersonModalPage {
     async save() {
         await this.saveBtn.waitForDisplayed({ timeout: 5000 })
         await this.saveBtn.click()
+        // If the site rejects the save, fail with its own message rather
+        // than the vaguer "save button still displayed" below.
+        const alerted = await this.sweetAlert.waitForDisplayed({ timeout: 10000 }).catch(() => false)
+        if (alerted && !(await this.sweetAlertSuccessIcon.isDisplayed())) {
+            throw new Error(`Save was rejected: ${await this.sweetAlert.getText()}`)
+        }
         await this.dismissSweetAlert()
         // Bootstrap hides the modal (display:none) rather than removing it from
         // the DOM, so the save button still "exists" after close — check visibility.
@@ -204,35 +246,55 @@ export default class PersonModalPage {
     }
 
     async disable(reason) {
-        await this.disableBtn.waitForDisplayed({ timeout: 5000 })
-        await this.disableBtn.click()
+        await this.clickTrigger(this.disableBtn)
 
         await this.disableReasonInput.waitForDisplayed({ timeout: 5000 })
+        // Same not-yet-loaded problem as the reset modal below.
+        await browser.pause(3000)
         await this.disableReasonInput.setValue(reason)
 
         await this.disableConfirmBtn.waitForDisplayed({ timeout: 5000 })
         await this.disableConfirmBtn.click()
-        await this.dismissSweetAlert()
+        await this.dismissSweetAlert(10000)
         await this.disableConfirmBtn.waitForDisplayed({ reverse: true, timeout: 10000 })
     }
 
     // Unlike disable(), enabling doesn't collect a reason — clicking Enable
     // goes straight to a Proceed/Cancel confirmation.
     async enable() {
-        await this.enableBtn.waitForDisplayed({ timeout: 5000 })
-        await this.enableBtn.click()
+        // A successful disable can hide its confirm button but leave the
+        // modal open over the table, which intercepts the Enable click.
+        const stillOpen = !(await this.openModal.waitForDisplayed({ reverse: true, timeout: 3000 }).catch(() => false))
+        if (stillOpen) await this.closeModal()
+
+        await this.clickTrigger(this.enableBtn)
 
         await this.enableConfirmBtn.waitForDisplayed({ timeout: 5000 })
+        // Same not-yet-loaded problem as the disable and reset modals.
+        await browser.pause(3000)
         await this.enableConfirmBtn.click()
+        // If the site rejects it, fail with its own message rather than the
+        // vaguer "confirm button still displayed" below.
+        const alerted = await this.sweetAlert.waitForDisplayed({ timeout: 10000 }).catch(() => false)
+        if (alerted && !(await this.sweetAlertSuccessIcon.isDisplayed())) {
+            throw new Error(`Enable was rejected: ${await this.sweetAlert.getText()}`)
+        }
         await this.dismissSweetAlert()
         await this.enableConfirmBtn.waitForDisplayed({ reverse: true, timeout: 10000 })
     }
 
-    async resetPassword(newPassword) {
-        await this.resetPasswordLink.waitForDisplayed({ timeout: 5000 })
-        await this.resetPasswordLink.click()
-
+    // The reset modal shows its fields before it has finished loading which
+    // user it belongs to. Confirming too early makes the site reject the reset
+    // with "User not found ! Not valid!" without sending a request. There's no
+    // visible signal for "loaded", so give it a moment like a person would.
+    async openResetPasswordModal() {
+        await this.clickTrigger(this.resetPasswordLink)
         await this.newPasswordInput.waitForDisplayed({ timeout: 5000 })
+        await browser.pause(3000)
+    }
+
+    async resetPassword(newPassword) {
+        await this.openResetPasswordModal()
         await this.newPasswordInput.setValue(newPassword)
 
         await this.resetConfirmBtn.waitForDisplayed({ timeout: 5000 })

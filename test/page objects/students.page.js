@@ -43,6 +43,8 @@ class StudentsPage extends ModulePage {
 
     // Filter — the table's cdv_<hash> component id is regenerated per page
     // load, so anchor on the stable prefix/suffix instead of the full id.
+    get searchInput() { return $('input[placeholder="Search Student"]') }
+
     get filterLink() { return $('a=Filter') }
     get filterApplyBtn() { return $('button[id^="btn-save-mdl-cdv_"][id$="-filter-modal"]') }
     get filterResetBtn() { return $('button[id^="btn-reset-mdl-cdv_"][id$="-filter-modal"]') }
@@ -52,6 +54,8 @@ class StudentsPage extends ModulePage {
         await this.newStudentBtn.click()
         await this.modal.waitForDisplayed({ timeout: 5000 })
         await this.saveBtn.waitForDisplayed({ timeout: 8000 })
+        // The form shows before it's ready, so give it a moment before typing.
+        await browser.pause(3000)
     }
 
     // Opens the bulk-upload modal to inspect it — never submits a file, since
@@ -68,21 +72,52 @@ class StudentsPage extends ModulePage {
         await this.openModal.waitForDisplayed({ timeout: 5000 })
     }
 
-    // Row-search helper — same pattern as personModal.page.js's row().
-    row(text) { return $(`//tr[.//td[contains(., "${text}")]]`) }
+    // The Students list is rows of divs, not a table, and names read
+    // "Last, First". Match the element whose own text holds the value.
+    row(text) { return $(`//*[text()[contains(., "${text}")]]`) }
+
+    // The list is paginated (20 per page) and new students aren't
+    // necessarily on page 1, so look them up the way a person would.
+    async search(text) {
+        await this.searchInput.waitForDisplayed({ timeout: 5000 })
+        await this.searchInput.setValue(text)
+        await browser.keys('Enter')
+    }
+
+    // Picks the first real (non-placeholder) option of a <select>. Department,
+    // Level and Admission Year are select2-backed but still set this way.
+    async selectFirstOption(selectElement) {
+        await selectElement.waitForExist({ timeout: 5000 })
+        const options = await selectElement.$$('option')
+        for (const option of options) {
+            const value = await option.getAttribute('value')
+            if (value) {
+                await selectElement.selectByAttribute('value', value)
+                return
+            }
+        }
+        throw new Error('No non-placeholder option found in select')
+    }
 
     // Fills every required field across both tabs with either a supplied
-    // value or a sane default, then saves. Department/Level/Program/
-    // Admission Year are left at whatever the form defaults to — any valid
-    // choice satisfies the form and the specific value doesn't matter here.
-    async create({ firstName, lastName, email, telephone, dateOfBirth }) {
+    // value or a sane default, then saves. Department, Level and Admission
+    // Year are required but start empty; any valid choice will do here.
+    async create({ firstName, lastName, email, telephone, dateOfBirth, matriculationNumber }) {
         await this.openNewModal()
+
+        await this.selectFirstOption(this.departmentSelect)
+        await this.selectFirstOption(this.levelSelect)
+        await this.selectFirstOption(this.admissionYearSelect)
 
         await this.firstNameInput.setValue(firstName)
         await this.lastNameInput.setValue(lastName)
         await this.emailInput.setValue(email)
         await this.telephoneInput.setValue(telephone)
-        await this.dateOfBirthInput.setValue(dateOfBirth)
+        // Chrome's date box takes keystrokes in its displayed mm/dd/yyyy order,
+        // so typing the ISO string straight in lands digits in the wrong parts.
+        const [year, month, day] = dateOfBirth.split('-')
+        await this.dateOfBirthInput.setValue(`${month}${day}${year}`)
+        await this.matriculationNumberInput.setValue(matriculationNumber)
 
         await this.addressTab.click()
         await this.addressStreetInput.waitForDisplayed({ timeout: 5000 })

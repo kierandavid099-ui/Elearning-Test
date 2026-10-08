@@ -11,6 +11,19 @@ export default class ModulePage {
     async open() {
         await browser.url(this.url)
         await this.breadcrumb.waitForDisplayed({ timeout: 10000 })
+        await this.dismissTour()
+    }
+
+    // The site sometimes opens a "Welcome to Invoice Manager" tour pop-up that
+    // sits over the page and blocks typing into forms. Close it as a person would.
+    get tourCloseBtn() { return $('.driver-popover-close-btn') }
+
+    async dismissTour() {
+        const shown = await this.tourCloseBtn.waitForDisplayed({ timeout: 3000 }).catch(() => false)
+        if (shown) {
+            await this.tourCloseBtn.click()
+            await this.tourCloseBtn.waitForDisplayed({ reverse: true, timeout: 5000 })
+        }
     }
 
     // Generic modal helpers for the confirmed-safe-to-inspect "New" modals

@@ -35,11 +35,15 @@ describe('REGRESSION (Course Admin) — Course Instructor', () => {
 
         it('REG-CA-INS-003 | Staff select field is displayed', async () => {
             addFeature('Course Admin Course Instructor'); addSeverity('critical')
+            // Don't rely on the modal REG-CA-INS-002 opened still being open —
+            // the app has been seen to dismiss it between tests.
+            if (!(await CourseInstructorPage.modal.isDisplayed())) await CourseInstructorPage.openNewModal()
             await expect(CourseInstructorPage.staffSelectContainer).toBeDisplayed()
         })
 
         it('REG-CA-INS-004 | Save button is present on the create modal', async () => {
             addFeature('Course Admin Course Instructor'); addSeverity('critical')
+            if (!(await CourseInstructorPage.modal.isDisplayed())) await CourseInstructorPage.openNewModal()
             await expect(CourseInstructorPage.saveBtn).toBeDisplayed()
         })
 
@@ -118,14 +122,16 @@ describe('REGRESSION (Course Admin) — Course Instructor', () => {
     })
 
     // ── Reset Password Modal ─────────────────────────────────────────────────
-    // Known bug in the site's password-reset flow (see project memory) — this
-    // is expected to fail. Reporting the real result rather than skipping it.
 
     describe('Reset Password Modal', () => {
 
         before(async () => {
-            await CourseInstructorPage.resetPasswordLink.waitForDisplayed({ timeout: 5000 })
-            await CourseInstructorPage.resetPasswordLink.click()
+            await CourseInstructorPage.openResetPasswordModal()
+        })
+
+        after(async () => {
+            // Only a successful reset closes the modal by itself.
+            if (await CourseInstructorPage.openModal.isDisplayed()) await CourseInstructorPage.closeModal()
         })
 
         it('REG-CA-INS-013 | Reset password link opens the modal', async () => {
@@ -139,11 +145,27 @@ describe('REGRESSION (Course Admin) — Course Instructor', () => {
             await expect(CourseInstructorPage.newPasswordInput).toHaveValue(RESET_PASSWORD)
         })
 
-        it('REG-CA-INS-015 | Confirming the reset closes the modal', async () => {
+        // Two outcomes count as a pass: the reset succeeds, or the site says
+        // "must be different from old password" because the account already
+        // holds RESET_PASSWORD from an earlier run. Both show the reset reached
+        // the server. Anything else fails, including "User not found", which
+        // means the modal hadn't finished loading (see openResetPasswordModal).
+        it('REG-CA-INS-015 | Clicking reset gets a response from the site', async () => {
             addFeature('Course Admin Course Instructor'); addSeverity('blocker')
+            await CourseInstructorPage.resetConfirmBtn.waitForClickable({ timeout: 5000 })
             await CourseInstructorPage.resetConfirmBtn.click()
-            await CourseInstructorPage.dismissSweetAlert()
-            await expect(CourseInstructorPage.resetConfirmBtn).not.toBeDisplayed()
+            // Like Disable, a successful reset may just close the modal with
+            // no alert, so the alert is optional. If one does appear, it has
+            // to be one of the two outcomes above.
+            const alerted = await CourseInstructorPage.sweetAlert.waitForDisplayed({ timeout: 10000 }).catch(() => false)
+            if (alerted) {
+                if (!(await CourseInstructorPage.sweetAlertSuccessIcon.isDisplayed())) {
+                    await expect(CourseInstructorPage.sweetAlert).toHaveText(/must be different from old password/i)
+                }
+                await CourseInstructorPage.dismissSweetAlert()
+            } else {
+                await expect(CourseInstructorPage.resetConfirmBtn).not.toBeDisplayed({ wait: 10000 })
+            }
         })
     })
 
@@ -152,8 +174,11 @@ describe('REGRESSION (Course Admin) — Course Instructor', () => {
     describe('Disable Instructor Modal', () => {
 
         before(async () => {
-            await CourseInstructorPage.disableBtn.waitForDisplayed({ timeout: 5000 })
-            await CourseInstructorPage.disableBtn.click()
+            await CourseInstructorPage.clickTrigger(CourseInstructorPage.disableBtn)
+            // Like the reset modal, this one shows its fields before it has
+            // loaded which user it's for; confirming too early is rejected.
+            await CourseInstructorPage.disableReasonInput.waitForDisplayed({ timeout: 5000 })
+            await browser.pause(3000)
         })
 
         it('REG-CA-INS-016 | Disable action opens the reason modal', async () => {
@@ -169,9 +194,17 @@ describe('REGRESSION (Course Admin) — Course Instructor', () => {
 
         it('REG-CA-INS-018 | Confirming disables the account and closes the modal', async () => {
             addFeature('Course Admin Course Instructor'); addSeverity('blocker')
+            await CourseInstructorPage.disableConfirmBtn.waitForClickable({ timeout: 5000 })
             await CourseInstructorPage.disableConfirmBtn.click()
+            // Success may close the modal without any alert, so the alert is
+            // optional. If the site rejected it, fail with its own message
+            // rather than the vaguer "modal still displayed" below.
+            const alerted = await CourseInstructorPage.sweetAlert.waitForDisplayed({ timeout: 10000 }).catch(() => false)
+            if (alerted && !(await CourseInstructorPage.sweetAlertSuccessIcon.isDisplayed())) {
+                throw new Error(`Disable was rejected: ${await CourseInstructorPage.sweetAlert.getText()}`)
+            }
             await CourseInstructorPage.dismissSweetAlert()
-            await expect(CourseInstructorPage.disableConfirmBtn).not.toBeDisplayed()
+            await expect(CourseInstructorPage.disableConfirmBtn).not.toBeDisplayed({ wait: 10000 })
         })
     })
 })

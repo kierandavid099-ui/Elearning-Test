@@ -14,11 +14,18 @@ class WebsiteContentPage extends ModulePage {
     // (btn-ate_<n>-add-new-page), so match on its stable text instead.
     get addNewPageLink() { return $('a*=Add New Pages') }
 
-    async openAddNewPageModal() {
+    async openOtherPagesTab() {
+        await this.otherPagesTab.waitForClickable({ timeout: 5000 })
         await this.otherPagesTab.click()
         await this.addNewPageLink.waitForDisplayed({ timeout: 5000 })
+    }
+
+    async openAddNewPageModal() {
+        await this.openOtherPagesTab()
         await this.addNewPageLink.click()
         await this.openModal.waitForDisplayed({ timeout: 5000 })
+        // The form shows before it's ready, so give it a moment before typing.
+        await browser.pause(3000)
     }
 
     // The New Page form's exact field ids aren't confirmed (regression only

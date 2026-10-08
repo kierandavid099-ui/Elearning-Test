@@ -2,7 +2,7 @@ import { addFeature, addSeverity } from '../../helpers/allureHelper.js'
 import LoginPage from '../../page objects/login.page.js'
 import StudentsPage from '../../page objects/students.page.js'
 import { ADMIN_USER } from '../../helpers/testData.js'
-import { uniqueName, randomEmail, randomPhone } from '../../helpers/random.js'
+import { uniqueName, randomEmail, randomPhone, randomDigits } from '../../helpers/random.js'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // E2E — Student lifecycle: an Admin creates a brand-new Student record and
@@ -22,6 +22,7 @@ describe('E2E — Student Lifecycle', () => {
         email: randomEmail('e2e-student'),
         telephone: randomPhone(),
         dateOfBirth: '2000-01-01',
+        matriculationNumber: `E2E${randomDigits(6)}`,
     }
 
     before(async () => {
@@ -38,6 +39,9 @@ describe('E2E — Student Lifecycle', () => {
 
     it('E2E-STU-002 | The new Student is listed on the Students page', async () => {
         addFeature('Student Lifecycle'); addSeverity('critical')
+        // The list is paginated and doesn't refresh after a save, so reload and search.
+        await StudentsPage.open()
+        await StudentsPage.search(student.lastName)
         await expect(StudentsPage.row(student.lastName)).toBeDisplayed()
     })
 })

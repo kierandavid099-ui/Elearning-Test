@@ -37,11 +37,17 @@ describe('E2E — Content Publishing', () => {
         addFeature('Content Publishing'); addSeverity('blocker')
         await WebsiteContentPage.openAddNewPageModal()
         await WebsiteContentPage.fillAndSaveNewPage(pageTitle)
+        // Saving reloads the screen onto the default Landing Page Content tab,
+        // which hides the Other Pages list until the tab is reopened.
+        await WebsiteContentPage.openOtherPagesTab()
         await expect(WebsiteContentPage.addNewPageLink).toBeDisplayed()
     })
 
     it('E2E-CNT-002 | The new page appears under Other Pages', async () => {
         addFeature('Content Publishing'); addSeverity('critical')
+        // The list doesn't refresh after a save; the new page shows once reloaded.
+        await WebsiteContentPage.open()
+        await WebsiteContentPage.openOtherPagesTab()
         await expect($(`*=${pageTitle}`)).toBeDisplayed()
     })
 })

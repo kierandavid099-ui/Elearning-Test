@@ -9,6 +9,12 @@ class LoginPage {
         await browser.url('https://nda.scola.ng/login')
     }
 
+    // /login redirects straight to /dashboard while a session is active, so
+    // switching roles mid-spec needs the old session dropped first.
+    async logout() {
+        await browser.deleteAllCookies()
+    }
+
     async login(email, password) {
         await this.emailInput.waitForDisplayed({ timeout: 5000 })
         await this.emailInput.setValue(email)

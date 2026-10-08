@@ -23,7 +23,39 @@ class CourseClassWorkspacePage {
         }
     }
 
+    // Same driver.js tour as personModal.page.js. It can pop up while a modal
+    // is open, and its overlay sits over the modal's close button too.
+    get tourCloseBtn() { return $('.driver-popover-close-btn') }
+
+    async dismissTour(timeout = 3000) {
+        const shown = await this.tourCloseBtn.waitForDisplayed({ timeout }).catch(() => false)
+        if (shown) {
+            await this.tourCloseBtn.click()
+            await this.tourCloseBtn.waitForDisplayed({ reverse: true, timeout: 5000 })
+        }
+    }
+
+    // The sidebar widens over the page while the mouse is on it (see
+    // sidebar.js) and then covers the tabs near the left edge. Park the
+    // mouse at the right of the viewport so it collapses back.
+    async collapseSidebar() {
+        const width = await browser.execute(() => window.innerWidth)
+        await browser.action('pointer').move({ x: width - 30, y: 200, origin: 'viewport' }).perform()
+        await browser.waitUntil(
+            async () => !((await $('.wrapper').getAttribute('class')) || '').includes('sidebar-hovered'),
+            { timeout: 3000 }
+        ).catch(() => {})
+    }
+
+    async clickTrigger(el) {
+        await el.waitForDisplayed({ timeout: 5000 })
+        await this.dismissTour(500)
+        await this.collapseSidebar()
+        await el.click()
+    }
+
     async closeModal() {
+        await this.dismissTour(500)
         await this.closeModalBtn.waitForClickable({ timeout: 5000 })
         await this.closeModalBtn.click()
         await this.openModal.waitForDisplayed({ reverse: true, timeout: 8000 })
@@ -34,9 +66,7 @@ class CourseClassWorkspacePage {
     tab(href) { return $(`a[data-bs-toggle="tab"][href="${href}"]`) }
 
     async openTab(href) {
-        const tab = this.tab(href)
-        await tab.waitForDisplayed({ timeout: 5000 })
-        await tab.click()
+        await this.clickTrigger(this.tab(href))
         await $(href).waitForDisplayed({ timeout: 5000 })
     }
 
@@ -49,8 +79,7 @@ class CourseClassWorkspacePage {
     get classSaveBtn() { return $('#btn-save-mdl-courseClass-modal') }
 
     async openEditClassModal() {
-        await this.editClassBtn.waitForDisplayed({ timeout: 5000 })
-        await this.editClassBtn.click()
+        await this.clickTrigger(this.editClassBtn)
         await this.classModal.waitForDisplayed({ timeout: 5000 })
         await this.classSaveBtn.waitForDisplayed({ timeout: 8000 })
         await browser.waitUntil(async () => (await this.classNameInput.getValue()) !== '', {
@@ -74,8 +103,7 @@ class CourseClassWorkspacePage {
     get announcementSaveBtn() { return $('#btn-save-mdl-announcement-modal') }
 
     async openNewAnnouncementModal() {
-        await this.newAnnouncementBtn.waitForDisplayed({ timeout: 5000 })
-        await this.newAnnouncementBtn.click()
+        await this.clickTrigger(this.newAnnouncementBtn)
         await this.announcementModal.waitForDisplayed({ timeout: 5000 })
         await this.announcementSaveBtn.waitForDisplayed({ timeout: 8000 })
     }
@@ -91,8 +119,7 @@ class CourseClassWorkspacePage {
     get readingMaterialSaveBtn() { return $('#btn-save-mdl-reading_material-modal') }
 
     async openNewReadingMaterialModal() {
-        await this.newReadingMaterialBtn.waitForDisplayed({ timeout: 5000 })
-        await this.newReadingMaterialBtn.click()
+        await this.clickTrigger(this.newReadingMaterialBtn)
         await this.readingMaterialModal.waitForDisplayed({ timeout: 5000 })
         await this.readingMaterialSaveBtn.waitForDisplayed({ timeout: 8000 })
     }
@@ -105,8 +132,7 @@ class CourseClassWorkspacePage {
     get outlineSaveBtn() { return $('#btn-save-mdl-course_outline-modal') }
 
     async openOutlineModal() {
-        await this.modifyOutlineBtn.waitForDisplayed({ timeout: 5000 })
-        await this.modifyOutlineBtn.click()
+        await this.clickTrigger(this.modifyOutlineBtn)
         await this.outlineModal.waitForDisplayed({ timeout: 5000 })
         await this.outlineSaveBtn.waitForDisplayed({ timeout: 8000 })
     }
@@ -126,8 +152,7 @@ class CourseClassWorkspacePage {
     get lectureSaveBtn() { return $('#btn-save-mdl-lecture_start-modal') }
 
     async openNewLectureModal() {
-        await this.newLectureBtn.waitForDisplayed({ timeout: 5000 })
-        await this.newLectureBtn.click()
+        await this.clickTrigger(this.newLectureBtn)
         await this.lectureModal.waitForDisplayed({ timeout: 5000 })
         await this.lectureSaveBtn.waitForDisplayed({ timeout: 8000 })
     }
@@ -149,8 +174,7 @@ class CourseClassWorkspacePage {
     get assignmentSaveBtn() { return $('#btn-save-mdl-assignment-modal') }
 
     async openNewAssignmentModal() {
-        await this.newAssignmentBtn.waitForDisplayed({ timeout: 5000 })
-        await this.newAssignmentBtn.click()
+        await this.clickTrigger(this.newAssignmentBtn)
         await this.assignmentModal.waitForDisplayed({ timeout: 5000 })
         await this.assignmentSaveBtn.waitForDisplayed({ timeout: 8000 })
     }
@@ -177,8 +201,7 @@ class CourseClassWorkspacePage {
     get assessmentSaveBtn() { return $('#btn-save-assessment') }
 
     async openNewAssessmentModal() {
-        await this.newAssessmentBtn.waitForDisplayed({ timeout: 5000 })
-        await this.newAssessmentBtn.click()
+        await this.clickTrigger(this.newAssessmentBtn)
         await this.assessmentModal.waitForDisplayed({ timeout: 5000 })
         await this.assessmentSaveBtn.waitForDisplayed({ timeout: 8000 })
     }
@@ -195,8 +218,7 @@ class CourseClassWorkspacePage {
     get forumSaveBtn() { return $('#btn-save-mdl-forum-modal') }
 
     async openEditForumModal() {
-        await this.forumEditBtn.waitForDisplayed({ timeout: 5000 })
-        await this.forumEditBtn.click()
+        await this.clickTrigger(this.forumEditBtn)
         await this.forumModal.waitForDisplayed({ timeout: 5000 })
         await this.forumSaveBtn.waitForDisplayed({ timeout: 8000 })
         await browser.waitUntil(async () => (await this.forumGroupNameInput.getValue()) !== '', {
@@ -206,8 +228,7 @@ class CourseClassWorkspacePage {
     }
 
     async openViewForumModal() {
-        await this.forumViewBtn.waitForDisplayed({ timeout: 5000 })
-        await this.forumViewBtn.click()
+        await this.clickTrigger(this.forumViewBtn)
         await this.openModal.waitForDisplayed({ timeout: 5000 })
     }
 
@@ -222,8 +243,7 @@ class CourseClassWorkspacePage {
     get badgeSaveBtn() { return $('#btn-save-badge') }
 
     async openNewBadgeModal() {
-        await this.newBadgeBtn.waitForDisplayed({ timeout: 5000 })
-        await this.newBadgeBtn.click()
+        await this.clickTrigger(this.newBadgeBtn)
         await this.badgeModal.waitForDisplayed({ timeout: 5000 })
         await this.badgeSaveBtn.waitForDisplayed({ timeout: 8000 })
     }
@@ -238,8 +258,7 @@ class CourseClassWorkspacePage {
     get groupSaveBtn() { return $('#btn-save-group') }
 
     async openNewGroupModal() {
-        await this.newGroupBtn.waitForDisplayed({ timeout: 5000 })
-        await this.newGroupBtn.click()
+        await this.clickTrigger(this.newGroupBtn)
         await this.groupModal.waitForDisplayed({ timeout: 5000 })
         await this.groupSaveBtn.waitForDisplayed({ timeout: 8000 })
     }
@@ -253,8 +272,7 @@ class CourseClassWorkspacePage {
     get studentBadgeSaveBtn() { return $('#btn-save-student-badge') }
 
     async openModifyStudentBadgeModal() {
-        await this.modifyStudentBadgeBtn.waitForDisplayed({ timeout: 5000 })
-        await this.modifyStudentBadgeBtn.click()
+        await this.clickTrigger(this.modifyStudentBadgeBtn)
         await this.studentBadgeModal.waitForDisplayed({ timeout: 5000 })
     }
 

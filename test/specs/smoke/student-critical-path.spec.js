@@ -70,7 +70,10 @@ describe('SMOKE — eLearning Critical Path (Student)', () => {
 
         it('SM-ST-ARC-001 | Archives page loads with the correct title', async () => {
             addFeature('Student Archives'); addSeverity('blocker')
-            await expect(browser).toHaveTitle(/Dashboard/i)
+            // The Archives page doesn't set a page-specific <title> — it
+            // renders the bare site title ("NDA Test -") unlike every other
+            // page in this suite, confirmed live rather than assumed.
+            await expect(browser).toHaveTitle(/NDA Test/i)
         })
 
         it('SM-ST-ARC-002 | Class Archives heading is present', async () => {
