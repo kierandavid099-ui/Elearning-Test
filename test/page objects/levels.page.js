@@ -21,12 +21,22 @@ class LevelsPage extends ModulePage {
         await this.saveBtn.waitForDisplayed({ timeout: 8000 })
     }
 
-    // Modal id isn't confirmed for this trigger, so — like the View modal
-    // pattern elsewhere — wait for whichever Bootstrap modal is currently open.
-    async openChangeStudentLevelModal() {
+    // Change Student Level isn't a modal: it opens a SweetAlert asking to move
+    // ALL students up a level ("irreversible"). Only ever answer No here —
+    // never use dismissSweetAlert(), which clicks Yes.
+    get changeLevelAlert() { return $('.sweet-alert.showSweetAlert') }
+    get changeLevelNoBtn() { return $('.sweet-alert.showSweetAlert button.cancel') }
+
+    async openChangeStudentLevelAlert() {
         await this.changeStudentLevelBtn.waitForDisplayed({ timeout: 5000 })
         await this.changeStudentLevelBtn.click()
-        await this.openModal.waitForDisplayed({ timeout: 5000 })
+        await this.changeLevelAlert.waitForDisplayed({ timeout: 10000 })
+    }
+
+    async cancelChangeStudentLevel() {
+        await this.changeLevelNoBtn.waitForClickable({ timeout: 5000 })
+        await this.changeLevelNoBtn.click()
+        await this.changeLevelAlert.waitForExist({ reverse: true, timeout: 5000 })
     }
 }
 

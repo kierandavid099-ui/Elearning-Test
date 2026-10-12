@@ -74,21 +74,24 @@ describe('REGRESSION — Levels', () => {
         })
     })
 
-    describe('Change Student Level Modal', () => {
+    // Confirming this promotes every student and can't be undone, so the
+    // tests only ever answer No.
+    describe('Change Student Level Confirmation', () => {
 
         before(async () => {
-            await LevelsPage.openChangeStudentLevelModal()
+            await LevelsPage.openChangeStudentLevelAlert()
         })
 
-        it('REG-LVL-010 | Clicking Change Student Level opens a modal', async () => {
+        it('REG-LVL-010 | Clicking Change Student Level asks for confirmation', async () => {
             addFeature('Levels'); addSeverity('critical')
-            await expect(LevelsPage.openModal).toBeDisplayed()
+            await expect(LevelsPage.changeLevelAlert).toBeDisplayed()
+            await expect(LevelsPage.changeLevelAlert).toHaveText(/change all students level/i)
         })
 
-        it('REG-LVL-011 | Closing without saving dismisses the modal', async () => {
+        it('REG-LVL-011 | Answering No dismisses the confirmation', async () => {
             addFeature('Levels'); addSeverity('critical')
-            await LevelsPage.closeModal()
-            await expect(LevelsPage.openModal).not.toBeDisplayed()
+            await LevelsPage.cancelChangeStudentLevel()
+            await expect(LevelsPage.changeLevelAlert).not.toBeExisting()
         })
     })
 })

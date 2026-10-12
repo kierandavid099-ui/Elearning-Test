@@ -1,5 +1,7 @@
 // Shared shape for simple Elearning module pages that smoke tests only need
 // to load and inspect — no modal CRUD flows (see personModal.page.js for that).
+import Sidebar from './sidebar.js'
+
 export default class ModulePage {
 
     constructor(url) {
@@ -16,14 +18,11 @@ export default class ModulePage {
 
     // The site sometimes opens a "Welcome to Invoice Manager" tour pop-up that
     // sits over the page and blocks typing into forms. Close it as a person would.
+    // The handling (including the pinned-sidebar site bug) lives in sidebar.js.
     get tourCloseBtn() { return $('.driver-popover-close-btn') }
 
-    async dismissTour() {
-        const shown = await this.tourCloseBtn.waitForDisplayed({ timeout: 3000 }).catch(() => false)
-        if (shown) {
-            await this.tourCloseBtn.click()
-            await this.tourCloseBtn.waitForDisplayed({ reverse: true, timeout: 5000 })
-        }
+    dismissTour(timeout = 3000) {
+        return Sidebar.dismissTour(timeout)
     }
 
     // Generic modal helpers for the confirmed-safe-to-inspect "New" modals
@@ -33,10 +32,23 @@ export default class ModulePage {
     get openModal() { return $('.modal.show') }
     get closeModalBtn() { return $('.modal.show button.btn-close') }
 
+    // The × click is sometimes lost (tour overlay, or the modal still fading
+    // in) and the open modal then blocks every later click on the page, so
+    // keep clicking the visible modal's × until it has actually gone.
     async closeModal() {
         await this.closeModalBtn.waitForClickable({ timeout: 5000 })
-        await this.closeModalBtn.click()
-        await this.openModal.waitForDisplayed({ reverse: true, timeout: 8000 })
+        const id = await browser.execute(() => [...document.querySelectorAll('.modal.show')]
+            .find(m => getComputedStyle(m).display !== 'none')?.id)
+        if (!id) return
+        const modal = $(`#${id}`)
+        await browser.waitUntil(async () => {
+            if (await modal.isDisplayed()) {
+                await this.dismissTour(500)
+                await modal.$('button.btn-close').click().catch(() => {})
+                await modal.waitForDisplayed({ reverse: true, timeout: 3000 }).catch(() => {})
+            }
+            return !(await modal.isDisplayed())
+        }, { timeout: 15000, interval: 500, timeoutMsg: 'Modal did not close' })
     }
 
     // Same SweetAlert-confirmation pattern used by personModal.page.js and

@@ -52,12 +52,9 @@ describe('REGRESSION (Course Instructor) — Assigned Classes', () => {
 
         it('REG-IAC-006 | Closing without applying does not error', async () => {
             addFeature('Course Instructor Assigned Classes'); addSeverity('critical')
-            // The filter modal's backdrop can linger after the close click on
-            // this page, so don't hard-fail on `.modal.show` disappearing —
-            // just confirm the close button works and the page stays usable.
             await AssignedClassesPage.closeModalBtn.waitForClickable({ timeout: 5000 })
-            await AssignedClassesPage.closeModalBtn.click()
-            await AssignedClassesPage.openModal.waitForDisplayed({ reverse: true, timeout: 5000 }).catch(() => {})
+            await AssignedClassesPage.closeFilterModal()
+            await expect(AssignedClassesPage.filterModal).not.toBeDisplayed()
             await expect(AssignedClassesPage.breadcrumb).toBeDisplayed()
         })
     })
@@ -66,7 +63,7 @@ describe('REGRESSION (Course Instructor) — Assigned Classes', () => {
 
         it('REG-IAC-007 | Clicking View opens the class workspace', async () => {
             addFeature('Course Instructor Assigned Classes'); addSeverity('blocker')
-            await AssignedClassesPage.firstViewLink.click()
+            await AssignedClassesPage.openFirstClass()
             expect(await browser.getUrl()).toContain('/scola-elearning/courseClasses/')
         })
     })

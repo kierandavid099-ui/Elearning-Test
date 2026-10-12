@@ -1,3 +1,5 @@
+import Sidebar from './sidebar.js'
+
 // The instructor's per-class workspace (courseClasses/{id}) — a single page with
 // Bootstrap tab panes for Class Details, Materials (Lectures/Assignments/
 // Assessments sub-tabs), Discussions, Feedback, Grades, Students, Analytics,
@@ -25,14 +27,9 @@ class CourseClassWorkspacePage {
 
     // Same driver.js tour as personModal.page.js. It can pop up while a modal
     // is open, and its overlay sits over the modal's close button too.
-    get tourCloseBtn() { return $('.driver-popover-close-btn') }
-
-    async dismissTour(timeout = 3000) {
-        const shown = await this.tourCloseBtn.waitForDisplayed({ timeout }).catch(() => false)
-        if (shown) {
-            await this.tourCloseBtn.click()
-            await this.tourCloseBtn.waitForDisplayed({ reverse: true, timeout: 5000 })
-        }
+    // The handling (including the pinned-sidebar site bug) lives in sidebar.js.
+    dismissTour(timeout = 3000) {
+        return Sidebar.dismissTour(timeout)
     }
 
     // The sidebar widens over the page while the mouse is on it (see
@@ -47,10 +44,24 @@ class CourseClassWorkspacePage {
         ).catch(() => {})
     }
 
+    // True when nothing (sidebar, tour overlay) sits over the element's centre.
+    async isUncovered(el) {
+        // Resolve the chainable first, or execute() gets a promise, not the node
+        const elem = await el
+        return browser.execute((node) => {
+            const r = node.getBoundingClientRect()
+            const top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)
+            return !!top && (node === top || node.contains(top))
+        }, elem)
+    }
+
+    // The hovered class drops before the sidebar finishes sliding shut, so
+    // also wait until the trigger itself is actually uncovered.
     async clickTrigger(el) {
         await el.waitForDisplayed({ timeout: 5000 })
         await this.dismissTour(500)
         await this.collapseSidebar()
+        await browser.waitUntil(() => this.isUncovered(el), { timeout: 3000 }).catch(() => {})
         await el.click()
     }
 

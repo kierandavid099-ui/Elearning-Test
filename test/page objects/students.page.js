@@ -78,10 +78,17 @@ class StudentsPage extends ModulePage {
 
     // The list is paginated (20 per page) and new students aren't
     // necessarily on page 1, so look them up the way a person would.
+    // The first search right after the page loads is often ignored (the list
+    // stays unfiltered), so search again until a matching entry shows.
     async search(text) {
         await this.searchInput.waitForDisplayed({ timeout: 5000 })
-        await this.searchInput.setValue(text)
-        await browser.keys('Enter')
+        for (let attempt = 0; attempt < 3; attempt++) {
+            await this.dismissTour(500)
+            await this.searchInput.clearValue()
+            await this.searchInput.setValue(text)
+            await browser.keys('Enter')
+            if (await this.row(text).waitForDisplayed({ timeout: 5000 }).catch(() => false)) return
+        }
     }
 
     // Picks the first real (non-placeholder) option of a <select>. Department,
