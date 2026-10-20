@@ -26,7 +26,8 @@ exports.config = {
     ],
     // Patterns to exclude.
     exclude: [
-        // 'path/to/excluded/files'
+        // k6 scripts — run with `npm run stress`, not WDIO
+        './test/specs/stress/**'
     ],
     //
     // ============
